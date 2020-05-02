@@ -1,15 +1,18 @@
 const mongoose = require(`mongoose`);
 const bcrypt = require(`bcrypt`);
 const db = require(`../models`);
-
-console.log(db.User.create);
+const APIErrors = require(`../utilities`);
 
 const saltRounds = 10;
 
 async function register(req, res) {
   try {
     registration = req.body;
-    if (!registration.screenName || !registration.email || !registration.password) {
+    if (
+      !registration.screenName ||
+      !registration.email ||
+      !registration.password
+    ) {
       throw new Error(`missing fields`);
     }
 
@@ -20,12 +23,10 @@ async function register(req, res) {
     let newUser = await db.User.create(registration);
 
     res.json({
-      newUser,
+      user: trimUser(newUser)
     });
-  }
-  catch (err) {
-    console.log(err);
-    res.sendStatus(500);
+  } catch (err) {
+    APIErrors.handleError(err, res);
   }
 }
 
@@ -37,49 +38,54 @@ async function login(req, res) {
     }
 
     let loggedInUser = await db.User.findOne({
-      email: request.email,
+      email: request.email
     });
     if (!loggedInUser) {
       throw new Error(`invalid credentials`);
     }
-    let check = await bcrypt.compare(
-      request.password,
-      loggedInUser.password
-    );
+
+    let check = await bcrypt.compare(request.password, loggedInUser.password);
     if (!check) {
       throw new Error(`invalid credentials`);
     }
 
     req.session.currentUser = loggedInUser;
+    console.log(req.session);
     res.status(200).json({
-      _id: loggedInUser._id,
-      screenName: loggedInUser.screenName,
-      email: loggedInUser.email,
+      user: trimUser(loggedInUser)
     });
-
-  }
-  catch (err) {
-    console.log(err);
-    res.sendStatus(500);
+  } catch (err) {
+    APIErrors.handleError(err, res);
   }
 }
 
 async function verify(req, res) {
   try {
     let currentUser = await isLoggedIn(req);
-
     if (!currentUser) {
+      console.log("no user");
       throw new Error(`not logged in`);
     }
 
-    res.json(currentUser);
+    res.json({
+      user: trimUser(currentUser)
+    });
+  } catch (err) {
+    APIErrors.handleError(err, res);
   }
-  catch (err) {
-    res.sendStatus(500);
+}
+
+async function logout(req, res) {
+  try {
+    req.session.destroy();
+    res.sendStatus(200);
+  } catch (err) {
+    APIErrors.handleError(err, res);
   }
 }
 
 async function isLoggedIn(req) {
+  console.log(req.session);
   if (!req.session.currentUser) {
     return false;
   }
@@ -92,14 +98,12 @@ async function isLoggedIn(req) {
   return currentUser;
 }
 
-async function logout(req, res) {
-  try {
-    req.session.currentUser = null;
-    res.sendStatus(200);
-  }
-  catch (err) {
-    res.sendStatus(500);
-  }
+function trimUser(user) {
+  return {
+    _id: user._id,
+    screenName: user.screenName,
+    email: user.email
+  };
 }
 
 module.exports = {
@@ -107,4 +111,4 @@ module.exports = {
   login,
   verify,
   logout
-}
+};
