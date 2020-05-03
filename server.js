@@ -14,6 +14,7 @@ const app = express();
 const routes = require("./routes");
 
 // Middleware
+// CORS
 app.use(
   cors({
     origin: `http://localhost:3000`,
@@ -22,6 +23,7 @@ app.use(
   })
 );
 
+// Body Parser
 app.use(
   bodyParser.urlencoded({
     extended: true
@@ -29,8 +31,10 @@ app.use(
 );
 app.use(bodyParser.json());
 
+// Morgan Logging
 app.use(morgan(`dev`));
 
+// Session Storing
 app.use(
   session({
     store: new MongoStore({
@@ -47,7 +51,7 @@ app.use(
 
 // Routes
 app.get("/", (req, res) => {
-  res.send("<h1>sessions API</h1>");
+  res.send("<h1>Delve Directory API</h1>");
 });
 
 app.use("/api/v1/sessions", routes.sessions);
