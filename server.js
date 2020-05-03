@@ -1,10 +1,11 @@
 // Import Externals
 const express = require("express");
 const bcrypt = require("bcrypt");
+const cors = require("cors");
 const bodyParser = require("body-parser");
+const morgan = require("morgan");
 const session = require("express-session");
 const MongoStore = require("connect-mongo")(session);
-const cors = require("cors");
 require("dotenv").config();
 
 // Configure
@@ -27,6 +28,8 @@ app.use(
   })
 );
 app.use(bodyParser.json());
+
+app.use(morgan(`dev`));
 
 app.use(
   session({
