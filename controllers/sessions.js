@@ -39,8 +39,7 @@ async function verify(req, res) {
   try {
     let currentSessionProfile = await isLoggedIn(req);
     if (!currentSessionProfile) {
-      console.log("no user");
-      throw new Error(`not logged in`);
+      util.Error.throwError(401);
     }
 
     res.json({

@@ -1,13 +1,14 @@
-class APIErrors {
-  httpErrors = {
-    400: Error("Bad Request"),
-    401: Error("Unauthorized"),
-    403: Error("Forbidden"),
-    404: Error("Not Found")
-  };
+const fs = require("fs");
 
-  logFile = `./server.log`;
-  logTimeOptions = {
+class Error {
+  static httpErrors = {
+    400: new Error("Bad Request"),
+    401: new Error("Unauthorized"),
+    403: new Error("Forbidden"),
+    404: new Error("Not Found")
+  };
+  static logFile = `./server.log`;
+  static logTimeOptions = {
     year: "numeric",
     month: "numeric",
     day: "numeric",
@@ -22,9 +23,8 @@ class APIErrors {
       Date.now()
     );
 
-    console.log(message);
-    // fs.appendFileSync(this.logFile, `Error on ${logTime}`);
-    // fs.appendFileSync(this.logFile, `${message}\n\n`);
+    fs.appendFileSync(Error.logFile, `Error at ${logTime}\n`);
+    fs.appendFileSync(Error.logFile, `${message}\n\n`);
 
     console.log(
       `\n\n-----\nError occurred. See server.log for details\n-----\n\n`
@@ -32,16 +32,15 @@ class APIErrors {
   }
 
   static throwError(status) {
-    newError = httpErrors[status];
+    let newError = Error.httpErrors[status];
     newError.status = status;
     throw newError;
   }
 
   static handleErrors(error, res) {
-    APIErrors.writeLog(error);
-
     if (!error.status) {
       error.status = 500;
+      Error.writeLog(error);
     }
     res.status(error.status).json({
       status: error.status,
@@ -50,4 +49,4 @@ class APIErrors {
   }
 }
 
-module.exports = APIErrors;
+module.exports = Error;
