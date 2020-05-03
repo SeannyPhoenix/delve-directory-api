@@ -1,3 +1,5 @@
 module.exports = {
-  auth: require('./auth'),
+  sessions: require(`./sessions`),
+  profiles: require(`./profiles`),
+  tables: require(`./tables`)
 };
