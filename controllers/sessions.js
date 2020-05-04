@@ -28,11 +28,8 @@ async function login(req, res) {
 
 async function verify(req, res) {
   try {
-    let currentSessionProfile = await isLoggedIn(req);
-    util.Error.validateFound(currentSessionProfile);
-    res.json({
-      user: util.Profile.trimProfile(currentSessionProfile)
-    });
+    let currentSessionProfile = await util.Session.getCurrentProfile(res);
+    res.json(util.Profile.trimProfile(currentSessionProfile));
   } catch (err) {
     util.Error.handleErrors(err, res);
   }
@@ -45,21 +42,6 @@ async function logout(req, res) {
   } catch (err) {
     util.Error.handleErrors(err, res);
   }
-}
-
-async function isLoggedIn(req) {
-  if (!req.session.currentProfile) {
-    return false;
-  }
-
-  let currentSessionProfile = await db.Profile.findById(
-    req.session.currentProfile._id
-  );
-
-  if (!currentSessionProfile) {
-    return false;
-  }
-  return currentSessionProfile;
 }
 
 module.exports = {

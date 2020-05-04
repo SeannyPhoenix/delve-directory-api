@@ -15,6 +15,24 @@ async function create(req, res) {
   }
 }
 
+async function userIndex(req, res) {
+  try {
+    let tableUser = null;
+    if (req.params.id) {
+      util.Error.validateObjectId(req.params.id);
+      tableUser = await await db.Profile.findById(req.params.id);
+      util.Error.validateFound(tableUser);
+    } else {
+      tableUser = await util.Session.getCurrentProfile(req);
+    }
+    let userTables = await db.Table.find({ owner: tableUser._id });
+    util.Error.validateFound(userTables);
+    res.json(userTables);
+  } catch (err) {
+    util.Error.handleErrors(err, res);
+  }
+}
+
 async function index(req, res) {
   try {
     let allTables = await db.Table.find().populate("seats");
@@ -61,6 +79,7 @@ async function destroy(req, res) {
 module.exports = {
   create,
   index,
+  userIndex,
   show,
   update,
   destroy
