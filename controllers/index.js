@@ -1,5 +1,6 @@
 module.exports = {
   sessions: require(`./sessions`),
   profiles: require(`./profiles`),
-  tables: require(`./tables`)
+  tables: require(`./tables`),
+  seats: require(`./seats`)
 };

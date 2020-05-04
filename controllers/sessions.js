@@ -12,11 +12,7 @@ async function login(req, res) {
     let newSessionProfile = await db.Profile.findOne({
       email: request.email
     });
-
-    if (!newSessionProfile) {
-      util.Error.throwError(401);
-    }
-
+    util.Error.validateFound(newSessionProfile);
     let check = await util.Session.checkPassword(
       request.password,
       newSessionProfile.password
@@ -38,10 +34,7 @@ async function login(req, res) {
 async function verify(req, res) {
   try {
     let currentSessionProfile = await isLoggedIn(req);
-    if (!currentSessionProfile) {
-      util.Error.throwError(401);
-    }
-
+    util.Error.validateFound(currentSessionProfile);
     res.json({
       user: util.Profile.trimProfile(currentSessionProfile)
     });

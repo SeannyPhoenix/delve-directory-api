@@ -29,8 +29,9 @@ async function create(req, res) {
 
 async function show(req, res) {
   try {
+    util.Error.validateObjectId(req.params.id);
     let thisProfile = await db.Profile.findById(req.params.id);
-
+    util.Error.validateFound(thisProfile);
     res.json(util.Profile.trimProfile(thisProfile));
   } catch (err) {
     util.Error.handleErrors(err, res);
@@ -39,12 +40,13 @@ async function show(req, res) {
 
 async function update(req, res) {
   try {
+    util.Error.validateObjectId(req.params.id);
     let updateProfile = await db.Profile.findByIdAndUpdate(
       req.params.id,
       req.body,
       { new: true }
     );
-
+    util.Error.validateFound(updateProfile);
     res.json(util.Profile.trimProfile(updateProfile));
   } catch (err) {
     util.Error.handleErrors(err, res);
@@ -53,15 +55,13 @@ async function update(req, res) {
 
 async function deactivate(req, res) {
   try {
+    util.Error.validateObjectId(req.params.id);
     let deactivateProfile = await db.Profile.findByIdAndUpdate(
       req.params.id,
-      {
-        active: false
-      },
-      {
-        new: true
-      }
+      { active: false },
+      { new: true }
     );
+    util.Error.validateFound(updateProfile);
     res.json(util.Profile.trimProfile(deactivateProfile));
   } catch (err) {
     util.Error.handleErrors(err, res);

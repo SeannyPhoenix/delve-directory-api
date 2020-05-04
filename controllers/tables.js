@@ -17,7 +17,7 @@ async function create(req, res) {
 
 async function index(req, res) {
   try {
-    let allTables = await db.Table.find();
+    let allTables = await db.Table.find().populate("seats");
     res.json(allTables);
   } catch (err) {
     util.Error.handleErrors(err, res);
@@ -37,6 +37,15 @@ async function show(req, res) {
 
 async function update(req, res) {
   try {
+    util.Error.validateObjectId(req.params.id);
+    delete req.body.seats; // Don't update seats with this endpoint
+    let updateTable = await db.Table.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true }
+    );
+    util.Error.validateFound(updateTable);
+    res.json(updateTable);
   } catch (err) {
     util.Error.handleErrors(err, res);
   }

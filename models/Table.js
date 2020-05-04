@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const ObjectId = mongoose.Types.ObjectId;
+const Seat = require("./Seat");
 
 const TableSchema = new Schema({
   name: String,
@@ -20,7 +21,7 @@ const TableSchema = new Schema({
   seats: [
     {
       type: ObjectId,
-      ref: "User"
+      ref: "Seat"
     }
   ]
 });
