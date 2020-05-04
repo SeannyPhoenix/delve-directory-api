@@ -1,3 +1,4 @@
+const mongoose = require("mongoose");
 const fs = require("fs");
 
 class Error {
@@ -46,6 +47,18 @@ class Error {
       status: error.status,
       error: error
     });
+  }
+
+  static validateObjectId(string) {
+    if (!mongoose.Types.ObjectId.isValid(string)) {
+      Error.throwError(400, `Invalid objectId`);
+    }
+  }
+
+  static validateFound(item) {
+    if (!item || item.length === 0) {
+      Error.throwError(404, `Item not found`);
+    }
   }
 }
 

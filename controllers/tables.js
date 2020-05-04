@@ -1,42 +1,51 @@
 const mongoose = require(`mongoose`);
 const db = require(`../models`);
-const { APIErrors } = require(`../utilities`);
+const util = require(`../utilities`);
 
 async function create(req, res) {
   try {
     let tableData = req.body;
-    console.log(tableData);
-    res.sendStatus(200);
+    if (!tableData.owner) {
+      util.Error.throwError(400);
+    }
+    let newTable = await db.Table.create(tableData);
+    res.json(newTable);
   } catch (err) {
-    APIErrors.handleErrors(err, res);
+    util.Error.handleErrors(err, res);
   }
 }
 
 async function index(req, res) {
   try {
+    let allTables = await db.Table.find();
+    res.json(allTables);
   } catch (err) {
-    APIErrors.handleErrors(err, res);
+    util.Error.handleErrors(err, res);
   }
 }
 
 async function show(req, res) {
   try {
+    util.Error.validateObjectId(req.params.id);
+    let thisTable = await db.Table.findById(req.params.id);
+    util.Error.validateFound(thisTable);
+    res.json(thisTable);
   } catch (err) {
-    APIErrors.handleErrors(err, res);
+    util.Error.handleErrors(err, res);
   }
 }
 
 async function update(req, res) {
   try {
   } catch (err) {
-    APIErrors.handleErrors(err, res);
+    util.Error.handleErrors(err, res);
   }
 }
 
 async function destroy(req, res) {
   try {
   } catch (err) {
-    APIErrors.handleErrors(err, res);
+    util.Error.handleErrors(err, res);
   }
 }
 

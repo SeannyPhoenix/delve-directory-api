@@ -3,6 +3,7 @@ const Schema = mongoose.Schema;
 const ObjectId = mongoose.Types.ObjectId;
 
 const TableSchema = new Schema({
+  name: String,
   owner: {
     type: ObjectId,
     ref: "User",
@@ -23,3 +24,7 @@ const TableSchema = new Schema({
     }
   ]
 });
+
+const Table = mongoose.model("Table", TableSchema);
+
+module.exports = Table;
