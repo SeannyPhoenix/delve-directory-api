@@ -13,15 +13,10 @@ async function login(req, res) {
       email: request.email
     });
     util.Error.validateFound(newSessionProfile);
-    let check = await util.Session.checkPassword(
+    await util.Session.checkPassword(
       request.password,
       newSessionProfile.password
     );
-
-    if (!check) {
-      util.Error.throwError(401);
-    }
-
     req.session.currentProfile = newSessionProfile;
     res.json({
       user: util.Profile.trimProfile(newSessionProfile)
