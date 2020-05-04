@@ -28,7 +28,7 @@ async function login(req, res) {
 
 async function verify(req, res) {
   try {
-    let currentSessionProfile = await util.Session.getCurrentProfile(res);
+    let currentSessionProfile = await util.Session.getCurrentProfile(req);
     res.json(util.Profile.trimProfile(currentSessionProfile));
   } catch (err) {
     util.Error.handleErrors(err, res);
