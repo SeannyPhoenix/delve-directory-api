@@ -45,7 +45,13 @@ async function index(req, res) {
 async function show(req, res) {
   try {
     util.Error.validateObjectId(req.params.id);
-    let thisTable = await db.Table.findById(req.params.id);
+    let thisTable = await db.Table.findById(req.params.id).populate({
+      path: "owner",
+      path: "seats",
+      populate: {
+        path: "profile"
+      }
+    });
     util.Error.validateFound(thisTable);
     res.json(thisTable);
   } catch (err) {

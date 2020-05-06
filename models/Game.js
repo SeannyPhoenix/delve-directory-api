@@ -7,12 +7,12 @@ const GameSchema = new Schema({
     required: true
   },
   publisher: {
-    type: String,
-    required: true
+    type: String
+    // required: true
   },
   website: {
-    type: String,
-    required: true
+    type: String
+    // required: true
   }
 });
 

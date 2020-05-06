@@ -15,5 +15,7 @@ mongoose
 module.exports = {
   Profile: require(`./Profile`),
   Table: require(`./Table`),
-  Seat: require(`./Seat`)
+  Seat: require(`./Seat`),
+  Game: require(`./Game`),
+  ZipData: require(`./ZipData`)
 };

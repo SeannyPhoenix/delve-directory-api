@@ -5,7 +5,7 @@ const ObjectId = mongoose.Types.ObjectId;
 const SeatSchema = new Schema({
   profile: {
     type: ObjectId,
-    ref: "User"
+    ref: "Profile"
   },
   role: String
 });

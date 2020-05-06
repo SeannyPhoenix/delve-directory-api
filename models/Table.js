@@ -7,13 +7,13 @@ const TableSchema = new Schema({
   name: String,
   owner: {
     type: ObjectId,
-    ref: "User",
+    ref: "Profile",
     reqired: true
   },
-  // location: {
-  //   type: {},
-  //   required: true,
-  // },
+  location: {
+    latitude: Number,
+    longitude: Number
+  },
   game: {
     type: ObjectId,
     ref: "Game"

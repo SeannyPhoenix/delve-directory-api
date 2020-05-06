@@ -56,7 +56,8 @@ class Error {
   }
 
   static validateFound(item) {
-    if (!item || item.length === 0) {
+    if (!item) {
+      //  || item.length === 0)
       Error.throwError(404, `Item not found`);
     }
   }
