@@ -15,7 +15,8 @@ const TableSchema = new Schema({
   },
   location: {
     latitude: Number,
-    longitude: Number
+    longitude: Number,
+    zipcode: String
   },
   game: {
     type: ObjectId,
