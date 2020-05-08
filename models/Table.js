@@ -13,25 +13,26 @@ const TableSchema = new Schema({
     ref: "Profile",
     reqired: true
   },
+  game: {
+    type: ObjectId,
+    ref: "Game"
+  },
   location: {
     latitude: Number,
     longitude: Number,
     zipcode: String
   },
-  game: {
-    type: ObjectId,
-    ref: "Game"
+  published: {
+    type: Boolean,
+    default: false
   },
+  info: String,
   seats: [
     {
       type: ObjectId,
       ref: "Seat"
     }
-  ],
-  published: {
-    type: Boolean,
-    default: false
-  }
+  ]
 });
 
 const Table = mongoose.model("Table", TableSchema);
