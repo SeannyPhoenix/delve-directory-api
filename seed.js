@@ -1,5 +1,6 @@
 const mongoose = require(`mongoose`);
 const bcrypt = require(`bcrypt`);
+require("dotenv").config();
 const db = require(`./models`);
 const zipData = require("./assets/data/us-zip-code-latitude-and-longitude-geo.json");
 

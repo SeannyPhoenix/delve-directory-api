@@ -1,0 +1,3 @@
+#!/bin/bash
+
+ssh -i "../Delve Directory API.pem" ec2-user@ec2-54-193-46-84.us-west-1.compute.amazonaws.com
