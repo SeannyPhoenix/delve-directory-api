@@ -4,7 +4,10 @@ const ObjectId = mongoose.Types.ObjectId;
 const Seat = require("./Seat");
 
 const TableSchema = new Schema({
-  name: String,
+  name: {
+    type: String,
+    required: true
+  },
   owner: {
     type: ObjectId,
     ref: "Profile",
@@ -23,7 +26,11 @@ const TableSchema = new Schema({
       type: ObjectId,
       ref: "Seat"
     }
-  ]
+  ],
+  published: {
+    type: Boolean,
+    default: false
+  }
 });
 
 const Table = mongoose.model("Table", TableSchema);

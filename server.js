@@ -57,6 +57,8 @@ app.get("/", (req, res) => {
 app.use("/api/v1/sessions", routes.sessions);
 app.use("/api/v1/profiles", routes.profiles);
 app.use("/api/v1/tables", routes.tables);
+app.use("/api/v1/seats", routes.seats);
+app.use("/api/v1/games", routes.games);
 app.use("/api/v1/zipdata", routes.zipdata);
 
 // Start server

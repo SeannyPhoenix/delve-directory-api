@@ -45,14 +45,21 @@ async function index(req, res) {
 async function show(req, res) {
   try {
     util.Error.validateObjectId(req.params.id);
-    let thisTable = await db.Table.findById(req.params.id).populate({
-      path: "owner",
-      path: "seats",
-      populate: {
-        path: "profile"
+    let thisTable = await db.Table.findById(req.params.id).populate([
+      {
+        path: "owner",
+        select: "active screenName email"
+      },
+      "game",
+      {
+        path: "seats",
+        populate: {
+          path: "profile"
+        }
       }
-    });
+    ]);
     util.Error.validateFound(thisTable);
+    thisTable.seats.sort((a, b) => a.createdAt - b.createdAt);
     res.json(thisTable);
   } catch (err) {
     util.Error.handleErrors(err, res);
@@ -77,6 +84,10 @@ async function update(req, res) {
 
 async function destroy(req, res) {
   try {
+    util.Error.validateObjectId(req.params.id);
+    let deleteTable = await db.Table.findByIdAndDelete(req.params.id);
+    util.Error.validateFound(deleteTable);
+    res.json(deleteTable);
   } catch (err) {
     util.Error.handleErrors(err, res);
   }
