@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const db_URI =
-  process.env.MONGO_URI || "mongodb://localhost:27017/delve-dictionary";
+  process.env.MONGODB_URI || "mongodb://localhost:27017/delve-dictionary";
 
 mongoose
   .connect(db_URI, {

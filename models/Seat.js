@@ -8,7 +8,10 @@ const SeatSchema = new Schema(
       type: ObjectId,
       ref: "Profile"
     },
-    role: String
+    role: {
+      type: String,
+      default: "player"
+    }
   },
   {
     timestamps: true
