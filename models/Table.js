@@ -18,7 +18,7 @@ const TableSchema = new Schema({
     type: ObjectId,
     ref: "Game"
   },
-  zipcode: String,
+  zip: String,
   location: Point.schema,
   published: {
     type: Boolean,

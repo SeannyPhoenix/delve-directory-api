@@ -73,12 +73,12 @@ async function update(req, res) {
     // Don't update seats with this endpoint
     delete tableData.seats;
     // Set proper location data
-    if (tableData.zipcode) {
+    if (tableData.zip) {
       let zipData = await db.ZipData.findOne({
-        "properties.postal": tableData.zipcode
+        "properties.zip": tableData.zip
       });
       util.Error.validateFound(zipData);
-      tableData.location = zipData.geometry;
+      tableData.location = zipData.properties.geopoint;
     }
     let updateTable = await db.Table.findByIdAndUpdate(
       req.params.id,

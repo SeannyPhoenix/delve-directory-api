@@ -11,8 +11,6 @@ const PointSchema = new Schema({
   }
 });
 
-// PointSchema.index({ coordinates: "2dsphere" });
-
 const ZipDataSchema = new Schema({
   type: {
     type: String
