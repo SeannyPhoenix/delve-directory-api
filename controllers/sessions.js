@@ -12,7 +12,7 @@ async function login(req, res) {
     let newSessionProfile = await db.Profile.findOne({
       email: request.email
     });
-    util.Error.validateFound(newSessionProfile);
+    util.Error.validateExists(newSessionProfile);
     await util.Session.checkPassword(
       request.password,
       newSessionProfile.password

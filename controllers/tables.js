@@ -21,12 +21,12 @@ async function userIndex(req, res) {
     if (req.params.id) {
       util.Error.validateObjectId(req.params.id);
       tableUser = await await db.Profile.findById(req.params.id);
-      util.Error.validateFound(tableUser);
+      util.Error.validateExists(tableUser);
     } else {
       tableUser = await util.Session.getCurrentProfile(req);
     }
     let userTables = await db.Table.find({ owner: tableUser._id });
-    util.Error.validateFound(userTables);
+    util.Error.validateExists(userTables);
     res.json(userTables);
   } catch (err) {
     util.Error.handleErrors(err, res);
@@ -58,7 +58,7 @@ async function show(req, res) {
         }
       }
     ]);
-    util.Error.validateFound(thisTable);
+    util.Error.validateExists(thisTable);
     thisTable.seats.sort((a, b) => a.createdAt - b.createdAt);
     res.json(thisTable);
   } catch (err) {
@@ -77,7 +77,7 @@ async function update(req, res) {
       let zipData = await db.ZipData.findOne({
         "properties.zip": tableData.zip
       });
-      util.Error.validateFound(zipData);
+      util.Error.validateExists(zipData);
       tableData.coordinates = zipData.properties.geopoint;
     }
     let updateTable = await db.Table.findByIdAndUpdate(
@@ -85,7 +85,7 @@ async function update(req, res) {
       req.body,
       { new: true }
     );
-    util.Error.validateFound(updateTable);
+    util.Error.validateExists(updateTable);
     res.json(updateTable);
   } catch (err) {
     util.Error.handleErrors(err, res);
@@ -96,7 +96,7 @@ async function destroy(req, res) {
   try {
     util.Error.validateObjectId(req.params.id);
     let deleteTable = await db.Table.findByIdAndDelete(req.params.id);
-    util.Error.validateFound(deleteTable);
+    util.Error.validateExists(deleteTable);
     res.json(deleteTable);
   } catch (err) {
     util.Error.handleErrors(err, res);

@@ -7,7 +7,7 @@ async function radius(req, res) {
     let params = req.params;
     if (params.zip) {
       let zipData = await db.ZipData.findOne({ "properties.zip": params.zip });
-      util.Error.validateFound(zipData);
+      util.Error.validateExists(zipData);
       params.coordinates = zipData.geometry.coordinates;
     } else {
       params.coordinates = [params.longitude, params.latitude];
@@ -35,7 +35,7 @@ async function show(req, res) {
   try {
     let zip = req.params.zip;
     let zipData = await db.ZipData.findOne({ "properties.zip": zip });
-    util.Error.validateFound(zipData);
+    util.Error.validateExists(zipData);
     res.json(zipData);
   } catch (err) {
     util.Error.handleErrors(err, res);

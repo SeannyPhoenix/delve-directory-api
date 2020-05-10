@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const ObjectId = mongoose.Types.ObjectId;
-// const Point = require("./Point");
 const Seat = require("./Seat");
 
 const TableSchema = new Schema({
@@ -29,6 +28,12 @@ const TableSchema = new Schema({
     {
       type: ObjectId,
       ref: "Seat"
+    }
+  ],
+  requests: [
+    {
+      type: ObjectId,
+      ref: "Profile"
     }
   ]
 });

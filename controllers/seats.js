@@ -6,11 +6,11 @@ async function add(req, res) {
   try {
     util.Error.validateObjectId(req.params.tableId);
     let thisTable = await db.Table.findById(req.params.tableId);
-    util.Error.validateFound(thisTable);
+    util.Error.validateExists(thisTable);
     let addSeat = await db.Seat.create(req.body);
     thisTable.seats.push(addSeat._id);
     thisTable.save();
-    res.json(addSeat);
+    res.status(201).json(addSeat);
   } catch (err) {
     util.Error.handleErrors(err, res);
   }
@@ -36,7 +36,7 @@ async function remove(req, res) {
     util.Error.validateObjectId(req.params.tableId);
     util.Error.validateObjectId(req.params.seatId);
     let thisTable = await db.Table.findById(req.params.tableId);
-    util.Error.validateFound(thisTable);
+    util.Error.validateExists(thisTable);
     let deleteSeat = await db.Seat.findByIdAndDelete(req.params.seatId);
     thisTable.seats.slice(
       thisTable.seats.indexOf({ _id: req.params.seatId }),
@@ -44,6 +44,23 @@ async function remove(req, res) {
     );
     thisTable.save();
     res.json(deleteSeat);
+  } catch (err) {
+    util.Error.handleErrors(err, res);
+  }
+}
+
+async function request(req, res) {
+  try {
+    util.Error.validateObjectId(req.params.tableId);
+    util.Error.validateExists(req.body.userId);
+    let thisTable = await db.Table.findById(req.params.tableId);
+    util.Error.validateExists(thisTable);
+    if (!thisTable.requests) {
+      thisTable.requests = [];
+    }
+    thisTable.requests.push(req.body.userId);
+    thisTable.save();
+    res.sendStatus(201);
   } catch (err) {
     util.Error.handleErrors(err, res);
   }
