@@ -75,7 +75,7 @@ async function update(req, res) {
     // Set proper location data
     if (tableData.zipcode) {
       let zipData = await db.ZipData.findOne({
-        "properties.postal": tableData.location.zipcode
+        "properties.postal": tableData.zipcode
       });
       util.Error.validateFound(zipData);
       tableData.location = zipData.geometry;
