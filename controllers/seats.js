@@ -69,5 +69,6 @@ async function request(req, res) {
 module.exports = {
   add,
   update,
-  remove
+  remove,
+  request
 };
