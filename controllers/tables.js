@@ -78,7 +78,7 @@ async function update(req, res) {
         "properties.zip": tableData.zip
       });
       util.Error.validateFound(zipData);
-      tableData.location = zipData.properties.geopoint;
+      tableData.coordinates = zipData.properties.geopoint;
     }
     let updateTable = await db.Table.findByIdAndUpdate(
       req.params.id,
