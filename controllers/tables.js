@@ -69,7 +69,17 @@ async function show(req, res) {
 async function update(req, res) {
   try {
     util.Error.validateObjectId(req.params.id);
-    delete req.body.seats; // Don't update seats with this endpoint
+    let tableData = req.body;
+    // Don't update seats with this endpoint
+    delete tableData.seats;
+    // Set proper location data
+    if (tableData.zipcode) {
+      let zipData = await db.ZipData.findOne({
+        "properties.postal": tableData.location.zipcode
+      });
+      util.Error.validateFound(zipData);
+      tableData.location = zipData.geometry;
+    }
     let updateTable = await db.Table.findByIdAndUpdate(
       req.params.id,
       req.body,

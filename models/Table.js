@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const ObjectId = mongoose.Types.ObjectId;
+const Point = require("./Point");
 const Seat = require("./Seat");
 
 const TableSchema = new Schema({
@@ -17,11 +18,8 @@ const TableSchema = new Schema({
     type: ObjectId,
     ref: "Game"
   },
-  location: {
-    latitude: Number,
-    longitude: Number,
-    zipcode: String
-  },
+  zipcode: String,
+  location: Point.schema,
   published: {
     type: Boolean,
     default: false
