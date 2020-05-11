@@ -242,6 +242,22 @@ const seedData = {
         { Profile: `5318008`, role: `Player` }
       ],
       requests: []
+    },
+    {
+      name: `Treasue Under the Mountain`,
+      owner: `Mister Caboose!`,
+      game: `Shadowrun`,
+      zip: `94110`,
+      published: `true`,
+      info: `We're playing Shadowrun. Also looking for 3 new players.`,
+      seats: [
+        { profile: `Mister Caboose!`, role: `Game Master` },
+        { profile: `Megan the Great`, role: `Player` },
+        { role: `Player` },
+        { role: `Player` },
+        { role: `Player` }
+      ],
+      requests: []
     }
   ]
 };
