@@ -1,0 +1,89 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-94.39398, 34.398483] },
+      "properties": {
+        "city": "Cove",
+        "zip": "71937",
+        "dst": 1,
+        "geopoint": [34.398483, -94.39398],
+        "longitude": -94.39398,
+        "state": "AR",
+        "latitude": 34.398483,
+        "timezone": -6
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-92.16056, 35.624351] },
+      "properties": {
+        "city": "Edgemont",
+        "zip": "72044",
+        "dst": 1,
+        "geopoint": [35.624351, -92.16056],
+        "longitude": -92.16056,
+        "state": "AR",
+        "latitude": 35.624351,
+        "timezone": -6
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-94.74357, 43.660847] },
+      "properties": {
+        "city": "Sherburn",
+        "zip": "56171",
+        "dst": 1,
+        "geopoint": [43.660847, -94.74357],
+        "longitude": -94.74357,
+        "state": "MN",
+        "latitude": 43.660847,
+        "timezone": -6
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-85.89754, 43.010337] },
+      "properties": {
+        "city": "Lamont",
+        "zip": "49430",
+        "dst": 1,
+        "geopoint": [43.010337, -85.89754],
+        "longitude": -85.89754,
+        "state": "MI",
+        "latitude": 43.010337,
+        "timezone": -5
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-91.98027, 41.194129] },
+      "properties": {
+        "city": "Richland",
+        "zip": "52585",
+        "dst": 1,
+        "geopoint": [41.194129, -91.98027],
+        "longitude": -91.98027,
+        "state": "IA",
+        "latitude": 41.194129,
+        "timezone": -6
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-86.67821, 37.934311] },
+      "properties": {
+        "city": "Cannelton",
+        "zip": "47520",
+        "dst": 0,
+        "geopoint": [37.934311, -86.67821],
+        "longitude": -86.67821,
+        "state": "IN",
+        "latitude": 37.934311,
+        "timezone": -5
+      }
+    }
+  ]
+}
