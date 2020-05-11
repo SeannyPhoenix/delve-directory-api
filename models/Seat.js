@@ -10,7 +10,7 @@ const SeatSchema = new Schema(
     },
     role: {
       type: String,
-      default: "player"
+      default: "Player"
     }
   },
   {

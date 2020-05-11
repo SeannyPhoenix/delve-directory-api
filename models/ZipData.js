@@ -28,6 +28,8 @@ const ZipDataSchema = new Schema({
   }
 });
 
+ZipDataSchema.index({ geometry: "2dsphere" });
+
 const ZipData = mongoose.model("ZipData", ZipDataSchema);
 
 module.exports = ZipData;

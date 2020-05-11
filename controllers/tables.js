@@ -35,7 +35,24 @@ async function userIndex(req, res) {
 
 async function index(req, res) {
   try {
-    let allTables = await db.Table.find().populate("seats");
+    let allTables = await db.Table.find().populate([
+      {
+        path: "owner",
+        select: "active screenName email"
+      },
+      "game",
+      {
+        path: "seats",
+        populate: {
+          path: "profile",
+          select: "active screenName email"
+        }
+      },
+      {
+        path: "requests",
+        select: "active screenName email"
+      }
+    ]);
     res.json(allTables);
   } catch (err) {
     util.Error.handleErrors(err, res);
@@ -54,8 +71,13 @@ async function show(req, res) {
       {
         path: "seats",
         populate: {
-          path: "profile"
+          path: "profile",
+          select: "active screenName email"
         }
+      },
+      {
+        path: "requests",
+        select: "active screenName email"
       }
     ]);
     util.Error.validateExists(thisTable);

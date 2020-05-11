@@ -52,13 +52,13 @@ async function remove(req, res) {
 async function request(req, res) {
   try {
     util.Error.validateObjectId(req.params.tableId);
-    util.Error.validateExists(req.body.userId);
+    util.Error.validateObjectId(req.params.userId);
     let thisTable = await db.Table.findById(req.params.tableId);
     util.Error.validateExists(thisTable);
     if (!thisTable.requests) {
       thisTable.requests = [];
     }
-    thisTable.requests.push(req.body.userId);
+    thisTable.requests.push(req.params.userId);
     thisTable.save();
     res.sendStatus(201);
   } catch (err) {

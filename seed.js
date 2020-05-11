@@ -30,48 +30,26 @@ const seedData = {
     }
   ],
   games: [
-    {
-      name: `Dungeons & Dragons`
-    },
-    {
-      name: `Pathfinder`
-    },
-    {
-      name: `Star Wars RPG`
-    },
-    {
-      name: `Shadowrun`
-    },
-    {
-      name: `GURPS`
-    },
-    {
-      name: `Savage Worlds`
-    },
-    {
-      name: `Dungeon World`
-    },
-    {
-      name: `FATE`
-    },
-    {
-      name: `RISUS`
-    },
-    {
-      name: `Apocalypse World`
-    },
-    {
-      name: `Simple System`
-    },
-    {
-      name: `Starfinder`
-    }
+    { name: `Dungeons & Dragons` },
+    { name: `Pathfinder` },
+    { name: `Star Wars RPG` },
+    { name: `Shadowrun` },
+    { name: `GURPS` },
+    { name: `Savage Worlds` },
+    { name: `Dungeon World` },
+    { name: `FATE` },
+    { name: `RISUS` },
+    { name: `Apocalypse World` },
+    { name: `Simple System` },
+    { name: `Starfinder` }
   ]
 };
 
 async function seed() {
   let startTime = Date.now();
   try {
+    await db.Table.deleteMany();
+    await db.Seat.deleteMany();
     let res = await db.Profile.deleteMany();
     console.log(`Deleted ${res.n} profiles.`);
     await Promise.all(
@@ -89,7 +67,7 @@ async function seed() {
     res = await db.Game.create(seedData.games);
     console.log(`Created ${res.length} games.`);
     if (process.argv.includes("zip")) {
-      await seedzip().catch(console.log);
+      await seedzip();
     }
   } finally {
     await mongoose.connection.close();
@@ -122,7 +100,7 @@ async function seedzip() {
       );
     }
     console.log(`Creating indexes`);
-    await db.ZipData.createIndexes({ geometry: "2dsphere" });
+    await db.ZipData.createIndexes();
   } catch (err) {
     console.log(err);
   }

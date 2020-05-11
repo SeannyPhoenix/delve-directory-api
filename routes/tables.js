@@ -13,6 +13,6 @@ router.post(`/:tableId/seats`, ctrl.seats.add);
 router.put(`/:tableId/seats/:seatId`, ctrl.seats.update);
 router.delete(`/:tableId/seats/:seatId`, ctrl.seats.remove);
 
-router.post(`/:tableId/request`, ctrl.seats.request);
+router.post(`/:tableId/request/:userId`, ctrl.seats.request);
 
 module.exports = router;
