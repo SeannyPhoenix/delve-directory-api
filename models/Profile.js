@@ -5,8 +5,6 @@ const ProfileSchema = new Schema({
   screenName: {
     type: String,
     required: true,
-    minlength: 3,
-    maxlength: 20,
     unique: true
   },
   email: {
@@ -18,6 +16,7 @@ const ProfileSchema = new Schema({
     type: String,
     required: true
   },
+  zip: String,
   active: {
     type: Boolean,
     default: true
