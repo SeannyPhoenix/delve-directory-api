@@ -59,6 +59,55 @@ async function index(req, res) {
   }
 }
 
+async function indexInRadius(req, res) {
+  try {
+    let params = req.params;
+    if (params.zip) {
+      let zipData = await db.ZipData.findOne({ "properties.zip": params.zip });
+      util.Error.validateExists(zipData);
+      params.coordinates = zipData.geometry.coordinates;
+    } else {
+      params.coordinates = [params.longitude, params.latitude];
+    }
+    let zipNear = await db.ZipData.find({
+      geometry: {
+        $near: {
+          $geometry: {
+            type: "Point",
+            coordinates: params.coordinates
+          },
+          $maxDistance: params.radius,
+          $minDistance: 0
+        }
+      }
+    });
+    let zipsInRadius = zipNear.map(zip => zip.properties.zip);
+    let allTables = await db.Table.find({
+      zip: { $in: zipsInRadius }
+    }).populate([
+      {
+        path: "owner",
+        select: "active screenName email"
+      },
+      "game",
+      {
+        path: "seats",
+        populate: {
+          path: "profile",
+          select: "active screenName email"
+        }
+      },
+      {
+        path: "requests",
+        select: "active screenName email"
+      }
+    ]);
+    res.json(allTables);
+  } catch (err) {
+    util.Error.handleErrors(err, res);
+  }
+}
+
 async function show(req, res) {
   try {
     util.Error.validateObjectId(req.params.id);
@@ -128,6 +177,7 @@ async function destroy(req, res) {
 module.exports = {
   create,
   index,
+  indexInRadius,
   userIndex,
   show,
   update,

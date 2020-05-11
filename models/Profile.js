@@ -5,7 +5,7 @@ const ProfileSchema = new Schema({
   screenName: {
     type: String,
     required: true,
-    minlength: 5,
+    minlength: 3,
     maxlength: 20,
     unique: true
   },

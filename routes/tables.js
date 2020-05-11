@@ -4,6 +4,8 @@ const ctrl = require(`../controllers`);
 
 router.post(`/`, ctrl.tables.create);
 router.get(`/`, ctrl.tables.index);
+router.get(`/near/:longitude/:latitude/:radius`, ctrl.tables.indexInRadius);
+router.get(`/near/:zip/:radius`, ctrl.tables.indexInRadius);
 router.get(`/user/:id?`, ctrl.tables.userIndex);
 router.get(`/:id`, ctrl.tables.show);
 router.put(`/:id`, ctrl.tables.update);
