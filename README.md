@@ -2,6 +2,8 @@
 ##### Client for [Delve Directory - Client](https://github.com/SeannyPhoenix/delve-directory-client)
 ##### Created by [Seanny Drakon Phoenix](https://www.github.com/seannyphoenix)
 
+Archived 2025-08-22
+
 ### Project Planning Deliverables
 
 * Scope
